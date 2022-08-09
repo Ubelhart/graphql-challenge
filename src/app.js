@@ -7,7 +7,7 @@ const io = new IOServer(httpServer);
 const { graphqlHTTP } = require("express-graphql");
 const { buildSchema } = require("graphql");
 const { containerMessages, containerProducts } = require("./Container");
-const { insertProduct, getDataBaseProducts } = containerProducts;
+const { getDataBaseProducts, insertProduct } = require("./products");
 
 const schema = buildSchema(`
     type Product {
@@ -22,10 +22,10 @@ const schema = buildSchema(`
         thumbnail: String
     }
     type Query {
-        getDataBaseProducts: [Product]
+        getDataBaseProducts(field: String, value: String): [Product]
     }
     type Mutation {
-        insertProduct(product: ProductInput): Product
+        insertProduct(data: ProductInput): Product
     }
 `);
 
